@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^8.2.2",
+    "mysql2": "^2.3.3"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "employee-tracker-me",
+  "version": "1.0.0",
+  "description": "Employee Tracker ME",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mae2136/employee-tracker-me.git"
+  },
+  "keywords": [
+    "n/a"
+  ],
+  "author": "Miguel Escobar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mae2136/employee-tracker-me/issues"
+  },
+  "homepage": "https://github.com/mae2136/employee-tracker-me#readme"
+}
