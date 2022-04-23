@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "console.table": "^0.10.0",
+    "dotenv": "^16.0.0",
     "inquirer": "^8.2.2",
     "mysql2": "^2.3.3"
   },
@@ -11,7 +12,6 @@
   "version": "1.0.0",
   "description": "Employee Tracker ME",
   "main": "server.js",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mae2136/employee-tracker-me.git"
