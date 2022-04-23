@@ -1,7 +1,7 @@
 // Credential Encryption
 require('dotenv').config();
 // Dependencies
-const inquirer = require(`inquirer`);
+const Business = require(`./helpers/business`)
 const mysql = require(`mysql2`);
 
 // Connect to database with hidden credentials
@@ -18,10 +18,6 @@ const db = mysql.createConnection(
     console.log(`Connected to the employees_db database.`)
 );
 
-function init() {
-    console.log(`🚀 Welcome to the employee tracker. Let's get started! 🚀`);
-    // Inquirer starting commands go here
-}
+const business = new Business();
 
-// Start program in command line
-init();
+business.init();
