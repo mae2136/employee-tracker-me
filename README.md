@@ -24,7 +24,7 @@
   
   It should look like the following:
   
-  ![Screenshot](./screenshot.PNG)
+  ![Screenshot](./asests/screenshot.gif)
   
   How to use the program:
   ```
