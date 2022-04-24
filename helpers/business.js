@@ -1,6 +1,8 @@
 const inquirer = require(`inquirer`);
 const cTable = require('console.table');
 
+const questions = ['View all Departments', 'View all Roles', 'View all Employees', 'Add a Department', 'Add a Role', 'Add an Employee', `Update an Employee Role`, `Quit`];
+
 class Business {
 
     constructor(db) {
@@ -18,22 +20,39 @@ class Business {
             {
                 // Ask user what they would like to do in the employee database
                 type: 'list',
-                name: 'options',
-                message: 'What would you lik eo do?',
-                choices: ['View all Departments', 'View all Roles', 'View all Employees', 'Add a Department', 'Add a Role', 'Add an Employee', `Update an Employee Role`, `Quit`],
+                name: 'choice',
+                message: 'What would you like to do?',
+                choices: questions,
+            },
+        ])
+        .then((answer) => {
+            // Create functions for each choice above, pick one based on what they picked
+            console.log(answer.choice);
+            if (answer.choice == questions[0]) {
+                this.viewDepartments();
+            } else if (answer.choice == questions[1]) {
+                this.viewRoles();
+            } else if (answer.choice == questions[2]) {
+                this.viewEmployees();
+            } else if (answer.choice == questions[3]) {
+                this.addDepartment();
+            } else if (answer.choice == questions[4]) {
+                this.addRole();
+            } else if (answer.choice == questions[5]) {
+                this.addEmployee();
+            } else if (answer.choice == questions[6]) {
+                this.updateEmployee();
+            } else {
+                this.quit();
             }
-                .then((answer) => {
-                    // Create functions for each choice above, pick one based on what they picked
-                    console.log(answer);
-                })
-        ]);
+        });
     }
 
     viewDepartments() {
         console.log(`Great! Let's view all Departments.`);
         // SQL query for all departments
         this.db.query(`SELECT * FROM department`, function (err, results) {
-            console.table(results);
+            console.table("/n", results);
         });
         this.employeeHome();
     };
@@ -41,9 +60,9 @@ class Business {
     viewRoles() {
         console.log(`Great! Let's view all Roles.`);
         // SQL query for all roles
-        this.db.query(`SELECT * FROM role`, function (err, results) {
-            console.table(results);
-        });
+        this.db.query(`SELECT * FROM roles`, function (err, results) {
+            console.table("/n", results);
+        })
         this.employeeHome();
     };
 
@@ -51,7 +70,7 @@ class Business {
         console.log(`Great! Let's view all Employees.`);
         // SQL query for all employees
         this.db.query(`SELECT * FROM employee`, function (err, results) {
-            console.table(results);
+            console.table("/n", results);
         });
         this.employeeHome();
     };
@@ -68,9 +87,9 @@ class Business {
         ])
             .then((department) => {
                 this.db.query(`INSERT INTO department VALUE (?)`, department, function (err, results) {
-                    console.log(`${department} was successfuly added!`);
-                    this.employeeHome();
+                    console.log(`The new Department was successfuly added!`);
                 });
+                this.employeeHome();
             });
     };
 
@@ -100,11 +119,11 @@ class Business {
             },
         ])
             .then((newRole) => {
-                { title, salary, department } = newRole;
+                const { title, salary, department } = newRole;
                 this.db.query(`INSERT INTO roles VALUE (?)`, newRole, function (err, results) {
-                    console.log(`${department} was successfuly added!`);
-                    this.employeeHome();
+                    console.log(`The new role was successfuly added!`);
                 });
+                this.employeeHome();
             });
     };
 
@@ -133,17 +152,34 @@ class Business {
                 message: "Who is the employee's manager",
             },
         ])
-            .then((newRole) => {
-                this.db.query(`INSERT INTO roles VALUE (?)`, newRoles, function (err, results) {
-                    console.log(`${department} was successfuly added!`);
-                    this.employeeHome();
+            .then((newEmployee) => {
+                this.db.query(`INSERT INTO roles VALUE (?)`, newEmployee, function (err, results) {
+                    console.log(`The new employee was successfuly added!`);
                 });
+                this.employeeHome();
             });
     };
 
     updateEmployee() {
         console.log(`Great! Let's update an employee's information`);
-        // SQL query employees
+        // SQL query employees and roles, make user pick from the list, then ask to input new information for that employee_id
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "employee",
+                message: "Which employee do you want to update?",
+                choices: [],
+            },
+            {
+                type: "list",
+                name: "role",
+                message: "What is the employee's new role?",
+                choices: [],
+            },
+        ]).then((updatedEmployee) => {
+            console.log(updatedEmployee);
+            this.employeeHome();
+        })
     };
 
     // Exits program
